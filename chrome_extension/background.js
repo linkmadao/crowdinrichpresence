@@ -1,17 +1,19 @@
 let id;
+let title;
 
 function update(tab) {
   let data;
 
-  if (tab) {
+  if (tab) 
+  {
     console.log(tab)
 
     // A default url just in case below code doesn't work
     var url = new URL(tab.url);
 
-    if (url === "chrome://newtab/") {
+    if (tab.url.includes("crowdin")) {
       data = {
-        status: "complete",
+        status: tab.status,
         action: "set",
         url: tab.url,
         details: url.hostname || tab.url,
@@ -19,16 +21,13 @@ function update(tab) {
         largeText: tab.title
       };
     }
-
-    data = {
-      status: tab.status,
-      action: "set",
-      url: tab.url,
-      details: url.hostname || tab.url,
-      smallText: tab.url,
-      largeText: tab.title
-    };
-  } 
+    else
+    {
+      data = {
+        action: "clear"
+      };
+    }
+  }
   else {
     data = {
       action: "clear"
@@ -49,10 +48,11 @@ setInterval(() => {
   chrome.windows.getLastFocused({ populate: true }, function (window) {
     for (let t in window.tabs) {
       if (window.tabs[t].highlighted) {
-        if (window.tabs[t].id !== id) {
+        if (window.tabs[t].id !== id || window.tabs[t].title !== title) {
           console.log(window.tabs[t]);
           update(window.tabs[t]);
           id = window.tabs[t].id;
+          title = window.tabs[t].title
         }
       }
     }

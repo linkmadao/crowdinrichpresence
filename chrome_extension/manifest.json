@@ -3,7 +3,7 @@
 
   "name": "Crowdin Discord Rich Presence",
   "description": "A Discord Rich Presence made by: Linkmadao",
-  "version": "1",
+  "version": "1.0.1",
     
   "background": {
     "scripts": ["jquery-3.2.1.min.js", "background.js"],
@@ -15,7 +15,8 @@
   "permissions": [
     "https://*/",
     "http://*/",
-    "tabs"
+    "tabs",
+    "scripting"
   ],
 
   "icons": {}

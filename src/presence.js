@@ -93,6 +93,8 @@ module.exports = function pre(client, body) {
                 else if (body.largeText.includes(' to '))
                     body.largeText = "No projeto: " + body.largeText.split(' to ')[0].split('Translating ')[1];
 
+                //body.state = "Página" + body.title
+                
                 client.setActivity({
                     state: body.state,
                     details: body.largeText,
@@ -151,6 +153,10 @@ module.exports = function pre(client, body) {
         }
     } 
     else if (body.action === "clear") 
+    {
+        client.clearActivity();
+    }
+    else
     {
         client.clearActivity();
     }

@@ -13,7 +13,12 @@ app.use(bodyParser.json());
 client.on('ready', () => {
     setInterval(async () => {
         app.post('/', function (req, res) {
-            presence(client, req.body);
+            try {
+                presence(client, req.body);    
+            } catch (error) {
+                console.log(error);
+            }
+            
         });
     }, 1000);
 
