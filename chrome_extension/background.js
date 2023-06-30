@@ -12,14 +12,27 @@ function update(tab) {
     var url = new URL(tab.url);
 
     if (tab.url.includes("crowdin")) {
-      data = {
-        status: tab.status,
-        action: "set",
-        url: tab.url,
-        details: url.hostname || tab.url,
-        smallText: tab.url,
-        largeText: tab.title
-      };
+      if (tab.url.includes("profile") || 
+        (tab.url.includes("settings") && !tab.url.includes("project"))){
+          data = {
+            status: tab.status,
+            action: "set",
+            url: tab.url,
+            details: url.hostname || tab.url,
+            smallText: tab.url,
+            largeText: tab.title
+          };
+        }
+      else {
+        data = {
+          status: tab.status,
+          action: "set",
+          url: tab.url,
+          details: url.hostname || tab.url,
+          smallText: tab.url,
+          largeText: tab.title
+        };
+      }
     }
     else
     {
