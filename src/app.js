@@ -11,16 +11,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 client.on('ready', () => {
-    setInterval(async () => {
-        app.post('/', function (req, res) {
-            try {
-                presence(client, req.body);    
-            } catch (error) {
-                console.log(error);
-            }
-            
-        });
-    }, 1000);
+    app.post('/', function (req, res) {
+        try {
+            presence(client, req.body);    
+        } catch (error) {
+            console.log(error);
+        }
+        
+        res.header("Access-Control-Allow-Origin", "*").sendStatus(200);
+    });
 
     app.listen(3000, () => console.log(`Started on port 3000!`));
 });
