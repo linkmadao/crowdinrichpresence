@@ -21,7 +21,14 @@ module.exports = function pre(client, body) {
             {
                 const labelText = body.smallText.split(body.smallText.split('/')[5])[0].replace("translate", "project");
                 const projeto = body.largeText.split(' - ')[1];
-                const language = arrayUrl[6].split('?')[0].split('-')[1].toLowerCase().replace('-', '');
+                const language = arrayUrl[6].split('?')[0].split('-')[1];
+                try
+                {
+                    language = language.toLowerCase().replace('-', '');
+                } catch (err)
+                {
+                    console.log(err);
+                }
 
                 var arquivo = body.largeText.split(' - ')[0];
                 if (arquivo === "All Strings")
@@ -29,13 +36,22 @@ module.exports = function pre(client, body) {
                 else
                     arquivo = "Arquivo: " + arquivo; 
                 
+                const project = arrayUrl[4];
+                try
+                {
+                    project = project.toLowerCase();
+                } catch (err)
+                {
+                    console.log(err);
+                }
+                
                 body.state = arquivo;
                 body.largeText = "Traduzindo: " + projeto;
                 client.setActivity({
                     state: body.state,
                     details: body.largeText,
                     startTimestamp: new Date(),
-                    largeImageKey: arrayUrl[4].toLowerCase() || arrayUrl[4],
+                    largeImageKey: project,
                     largeImageText: projeto,
                     smallImageKey: language,
                     instance: true,
@@ -46,7 +62,14 @@ module.exports = function pre(client, body) {
             else if (body.smallText.includes("crowdin.com/proofread/")) {
                 const labelText = body.smallText.split(body.smallText.split('/')[5])[0].replace("proofread", "project");
                 const projeto = body.largeText.split(' - ')[1];
-                const language = arrayUrl[6].split('?')[0].split('-')[1].toLowerCase().replace('-', '');
+                const language = arrayUrl[6].split('?')[0].split('-')[1];
+                try
+                {
+                    language = language.toLowerCase().replace('-', '');
+                } catch (err)
+                {
+                    console.log(err);
+                }
                 
                 var arquivo = body.largeText.split(' - ')[0];
                 if (arquivo === "All Strings")
@@ -54,13 +77,22 @@ module.exports = function pre(client, body) {
                 else
                     arquivo = "Arquivo: " + body.largeText.split(' - ')[0]; 
                 
+                const project = arrayUrl[4];
+                try
+                {
+                    project = project.toLowerCase();
+                } catch (err)
+                {
+                    console.log(err);
+                }
+
                 body.state = arquivo;
                 body.largeText = "Revisando: " + projeto;
                 client.setActivity({
                     state: body.state,
                     details: body.largeText,
                     startTimestamp: new Date(),
-                    largeImageKey: arrayUrl[4].toLowerCase() || arrayUrl[4],
+                    largeImageKey: project,
                     smallImageKey: language,
                     instance: true,
                     type: 2,
@@ -75,12 +107,29 @@ module.exports = function pre(client, body) {
                 else if (body.largeText.includes(' to '))
                     body.largeText = "No projeto: " + body.largeText.split(' to ')[0].split('Translating ')[1];
                 
+                const project = arrayUrl[4];
+                try
+                {
+                    project = project.toLowerCase();
+                } catch (err)
+                {
+                    console.log(err);
+                }
+                const language = arrayUrl[5];
+                try
+                {
+                    language = language.toLowerCase().replace('-', '');
+                } catch (err)
+                {
+                    console.log(err);
+                }
+
                 client.setActivity({
                     state: body.state,
                     details: body.largeText,
                     startTimestamp: new Date(),
-                    largeImageKey: arrayUrl[4].toLowerCase() || arrayUrl[4],
-                    smallImageKey: arrayUrl[5].toLowerCase().replace('-', ''),
+                    largeImageKey: project,
+                    smallImageKey: language,
                     instance: true,
                     type: 2,
                     buttons: [{ label: "Ajudar na tradução", url: labelText }]
